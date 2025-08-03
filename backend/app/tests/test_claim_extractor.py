@@ -1,9 +1,11 @@
 import pytest
 from app.services.claim_extractor import ClaimExtractor
 
+
 @pytest.fixture
 def claim_extractor():
     return ClaimExtractor()
+
 
 class TestClaimExtractor:
     @pytest.mark.asyncio
@@ -27,11 +29,11 @@ class TestClaimExtractor:
         # Valid claim
         valid_claim = "Exercise significantly reduces cardiovascular disease risk"
         assert claim_extractor._is_valid_claim(valid_claim) == True
-        
+
         # Too short
         short_claim = "Exercise good"
         assert claim_extractor._is_valid_claim(short_claim) == False
-        
+
         # Citation only
         citation_claim = "[Smith et al., 2020]"
         assert claim_extractor._is_valid_claim(citation_claim) == False
@@ -40,13 +42,13 @@ class TestClaimExtractor:
         claim1 = "Exercise reduces heart disease risk"
         claim2 = "Physical activity decreases cardiovascular risk"
         claim3 = "Meditation improves mental health"
-        
+
         # Should be somewhat similar (different words, same concept)
         similarity1 = claim_extractor._are_similar_claims(claim1, claim2)
-        
+
         # Should not be similar (different topics)
         similarity2 = claim_extractor._are_similar_claims(claim1, claim3)
-        
+
         assert similarity2 == False  # Different topics
 
     @pytest.mark.asyncio
@@ -56,7 +58,7 @@ class TestClaimExtractor:
         Statistical analysis was performed using ANOVA with p < 0.05 significance level.
         """
         indicators = await claim_extractor.analyze_method_quality_indicators(text)
-        
-        assert indicators['sample_size'] == 500
-        assert indicators['has_statistics'] == True
-        assert len(indicators['p_values']) > 0
+
+        assert indicators["sample_size"] == 500
+        assert indicators["has_statistics"] == True
+        assert len(indicators["p_values"]) > 0

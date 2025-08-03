@@ -1,14 +1,18 @@
 import pytest
 from app.services.text_extractor import TextExtractor
 
+
 @pytest.fixture
 def text_extractor():
     return TextExtractor()
 
+
 class TestTextExtractor:
     @pytest.mark.asyncio
     async def test_extract_title(self, text_extractor):
-        text = "Introduction\n\nThe Impact of Exercise on Health\n\nThis study examines..."
+        text = (
+            "Introduction\n\nThe Impact of Exercise on Health\n\nThis study examines..."
+        )
         title = text_extractor._extract_title(text)
         assert "The Impact of Exercise on Health" in title
 
@@ -23,10 +27,10 @@ class TestTextExtractor:
     def test_extract_abstract(self, text_extractor):
         text = """
         Title: Test Paper
-        
+
         Abstract: This is the abstract of the paper. It contains important information
         about the study methodology and findings. The abstract should be extracted correctly.
-        
+
         Introduction: This is the introduction section.
         """
         abstract = text_extractor._extract_abstract(text)

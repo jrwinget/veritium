@@ -9,7 +9,7 @@ app = FastAPI(
     description="Scientific Article Verification System",
     version="1.0.0",
     docs_url="/docs",
-    redoc_url="/redoc"
+    redoc_url="/redoc",
 )
 
 app.add_middleware(
@@ -20,15 +20,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.on_event("startup")
 async def startup_event():
     await init_db()
 
+
 app.include_router(router, prefix="/api/v1")
+
 
 @app.get("/")
 async def root():
     return {"message": "Veritium API", "version": "1.0.0"}
+
 
 @app.get("/health")
 async def health_check():

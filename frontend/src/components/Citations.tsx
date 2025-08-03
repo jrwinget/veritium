@@ -22,21 +22,21 @@ export default function Citations({ citations }: CitationsProps) {
               </h4>
               <p className="text-sm text-gray-600">{citation.document_title}</p>
             </div>
-            
+
             <div className="text-right text-sm text-gray-600">
               <div>Relevance: {formatSimilarity(citation.similarity_score)}%</div>
             </div>
           </div>
-          
+
           <blockquote className="text-gray-700 border-l-2 border-gray-300 pl-4 mb-3 italic">
             "{citation.text}"
           </blockquote>
-          
+
           <div className="flex items-center justify-between text-sm">
             <div className="text-gray-500">
               Section {citation.snippet_index + 1}
             </div>
-            
+
             <div className="flex items-center space-x-2">
               {citation.doi && (
                 <a
@@ -50,7 +50,7 @@ export default function Citations({ citations }: CitationsProps) {
                   DOI
                 </a>
               )}
-              
+
               {citation.url && !citation.doi && (
                 <a
                   href={citation.url}
@@ -67,7 +67,7 @@ export default function Citations({ citations }: CitationsProps) {
           </div>
         </div>
       ))}
-      
+
       {citations.length === 0 && (
         <div className="text-center py-8 text-gray-500">
           <p>No citations available for this assessment.</p>

@@ -7,9 +7,11 @@ from pydantic import BaseModel
 
 router = APIRouter()
 
+
 class CreateAssessmentRequest(BaseModel):
     document_id: int
     user_claim: str
+
 
 class AssessmentResponse(BaseModel):
     id: int
@@ -27,21 +29,21 @@ class AssessmentResponse(BaseModel):
     share_id: Optional[str]
     created_at: str
 
+
 class FeedbackRequest(BaseModel):
     feedback_score: int  # 1 for thumbs up, -1 for thumbs down
     feedback_comment: Optional[str] = None
 
+
 @router.post("/", response_model=AssessmentResponse)
 async def create_assessment(
-    request: CreateAssessmentRequest,
-    db: AsyncSession = Depends(get_db)
+    request: CreateAssessmentRequest, db: AsyncSession = Depends(get_db)
 ):
     service = AssessmentService(db)
     assessment = await service.create_assessment(
-        document_id=request.document_id,
-        user_claim=request.user_claim
+        document_id=request.document_id, user_claim=request.user_claim
     )
-    
+
     return AssessmentResponse(
         id=assessment.id,
         document_id=assessment.document_id,
@@ -56,17 +58,18 @@ async def create_assessment(
         evidence_snippets=assessment.evidence_snippets or [],
         citations=assessment.citations or [],
         share_id=assessment.share_id,
-        created_at=assessment.created_at.isoformat()
+        created_at=assessment.created_at.isoformat(),
     )
+
 
 @router.get("/{assessment_id}", response_model=AssessmentResponse)
 async def get_assessment(assessment_id: int, db: AsyncSession = Depends(get_db)):
     service = AssessmentService(db)
     assessment = await service.get_assessment(assessment_id)
-    
+
     if not assessment:
         raise HTTPException(status_code=404, detail="Assessment not found")
-    
+
     return AssessmentResponse(
         id=assessment.id,
         document_id=assessment.document_id,
@@ -81,17 +84,18 @@ async def get_assessment(assessment_id: int, db: AsyncSession = Depends(get_db))
         evidence_snippets=assessment.evidence_snippets or [],
         citations=assessment.citations or [],
         share_id=assessment.share_id,
-        created_at=assessment.created_at.isoformat()
+        created_at=assessment.created_at.isoformat(),
     )
+
 
 @router.get("/share/{share_id}", response_model=AssessmentResponse)
 async def get_shared_assessment(share_id: str, db: AsyncSession = Depends(get_db)):
     service = AssessmentService(db)
     assessment = await service.get_assessment_by_share_id(share_id)
-    
+
     if not assessment:
         raise HTTPException(status_code=404, detail="Shared assessment not found")
-    
+
     return AssessmentResponse(
         id=assessment.id,
         document_id=assessment.document_id,
@@ -106,23 +110,22 @@ async def get_shared_assessment(share_id: str, db: AsyncSession = Depends(get_db
         evidence_snippets=assessment.evidence_snippets or [],
         citations=assessment.citations or [],
         share_id=assessment.share_id,
-        created_at=assessment.created_at.isoformat()
+        created_at=assessment.created_at.isoformat(),
     )
+
 
 @router.post("/{assessment_id}/feedback")
 async def submit_feedback(
-    assessment_id: int,
-    request: FeedbackRequest,
-    db: AsyncSession = Depends(get_db)
+    assessment_id: int, request: FeedbackRequest, db: AsyncSession = Depends(get_db)
 ):
     service = AssessmentService(db)
     success = await service.submit_feedback(
         assessment_id=assessment_id,
         feedback_score=request.feedback_score,
-        feedback_comment=request.feedback_comment
+        feedback_comment=request.feedback_comment,
     )
-    
+
     if not success:
         raise HTTPException(status_code=404, detail="Assessment not found")
-    
+
     return {"message": "Feedback submitted successfully"}

@@ -11,7 +11,7 @@ export default function ClaimInput({ onSubmit, isLoading }: ClaimInputProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     if (!claim.trim()) {
       return
     }

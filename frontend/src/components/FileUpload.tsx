@@ -56,8 +56,8 @@ export default function FileUpload({ onUpload, onError, isLoading, setIsLoading 
       {...getRootProps()}
       className={`
         border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors duration-200
-        ${isDragActive 
-          ? 'border-primary-400 bg-primary-50' 
+        ${isDragActive
+          ? 'border-primary-400 bg-primary-50'
           : 'border-gray-300 hover:border-gray-400'
         }
         ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}
@@ -69,7 +69,7 @@ export default function FileUpload({ onUpload, onError, isLoading, setIsLoading 
       aria-describedby="file-upload-description"
     >
       <input {...getInputProps()} aria-hidden="true" />
-      
+
       <div className="space-y-2">
         {isLoading ? (
           <>
@@ -83,7 +83,7 @@ export default function FileUpload({ onUpload, onError, isLoading, setIsLoading 
             ) : (
               <DocumentIcon className="mx-auto h-8 w-8 text-gray-400" aria-hidden="true" />
             )}
-            
+
             <div>
               <p className="text-sm font-medium text-gray-900">
                 {isDragActive ? 'Drop the file here' : 'Drop a file here, or click to select'}

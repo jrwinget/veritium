@@ -47,7 +47,7 @@ export default function HomePage() {
           Scientific Article Verification
         </h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          Upload a research paper or enter a URL/DOI, then test how well it supports your claims. 
+          Upload a research paper or enter a URL/DOI, then test how well it supports your claims.
           Get transparent, evidence-based assessments with detailed explanations.
         </p>
       </div>
@@ -57,7 +57,7 @@ export default function HomePage() {
         <h2 className="text-2xl font-semibold text-gray-900 mb-6">
           Step 1: Upload Document
         </h2>
-        
+
         <div className="grid md:grid-cols-3 gap-6">
           <div>
             <h3 className="text-lg font-medium text-gray-900 mb-3">
@@ -70,7 +70,7 @@ export default function HomePage() {
               setIsLoading={setIsLoading}
             />
           </div>
-          
+
           <div>
             <h3 className="text-lg font-medium text-gray-900 mb-3">
               From URL
@@ -82,7 +82,7 @@ export default function HomePage() {
               setIsLoading={setIsLoading}
             />
           </div>
-          
+
           <div>
             <h3 className="text-lg font-medium text-gray-900 mb-3">
               From DOI
@@ -103,32 +103,32 @@ export default function HomePage() {
           <h2 className="text-2xl font-semibold text-gray-900 mb-4">
             Document Summary
           </h2>
-          
+
           <div className="space-y-4">
             <div>
               <h3 className="font-medium text-gray-900">Title</h3>
               <p className="text-gray-700">{document.title}</p>
             </div>
-            
+
             {document.authors.length > 0 && (
               <div>
                 <h3 className="font-medium text-gray-900">Authors</h3>
                 <p className="text-gray-700">{document.authors.join(', ')}</p>
               </div>
             )}
-            
+
             {document.abstract && (
               <div>
                 <h3 className="font-medium text-gray-900">Abstract</h3>
                 <p className="text-gray-700 text-sm leading-relaxed">
-                  {document.abstract.length > 300 
-                    ? `${document.abstract.substring(0, 300)}...` 
+                  {document.abstract.length > 300
+                    ? `${document.abstract.substring(0, 300)}...`
                     : document.abstract
                   }
                 </p>
               </div>
             )}
-            
+
             {document.extracted_claims.length > 0 && (
               <div>
                 <h3 className="font-medium text-gray-900">Extracted Claims</h3>
@@ -146,7 +146,7 @@ export default function HomePage() {
                 </ul>
               </div>
             )}
-            
+
             <div className="flex space-x-4 text-sm text-gray-600">
               <span>Quality Score: {(document.method_quality_score * 100).toFixed(0)}%</span>
               <span>Confidence: {(document.confidence_score * 100).toFixed(0)}%</span>
@@ -161,8 +161,8 @@ export default function HomePage() {
           <h2 className="text-2xl font-semibold text-gray-900 mb-6">
             Step 2: Enter Your Claim
           </h2>
-          
-          <ClaimInput 
+
+          <ClaimInput
             onSubmit={handleClaimSubmit}
             isLoading={isLoading}
           />
@@ -174,7 +174,7 @@ export default function HomePage() {
         <h2 className="text-xl font-semibold text-primary-900 mb-4">
           How It Works
         </h2>
-        
+
         <div className="grid md:grid-cols-2 gap-6 text-sm text-primary-800">
           <div>
             <h3 className="font-medium mb-2">Document Analysis</h3>
@@ -184,7 +184,7 @@ export default function HomePage() {
               <li>Identifies key findings and conclusions</li>
             </ul>
           </div>
-          
+
           <div>
             <h3 className="font-medium mb-2">Claim Verification</h3>
             <ul className="space-y-1 list-disc list-inside">

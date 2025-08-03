@@ -1,9 +1,11 @@
 import pytest
 from app.services.quality_scorer import QualityScorer
 
+
 @pytest.fixture
 def quality_scorer():
     return QualityScorer()
+
 
 class TestQualityScorer:
     @pytest.mark.asyncio
@@ -16,7 +18,7 @@ class TestQualityScorer:
         Authors declare no conflicts of interest and acknowledge funding sources.
         """
         claims = ["Exercise reduces cardiovascular disease risk"]
-        
+
         score = await quality_scorer.calculate_score(text, claims)
         assert 0.0 <= score <= 1.0
         assert score > 0.5  # Should be relatively high given the good indicators
@@ -68,11 +70,11 @@ class TestQualityScorer:
         Published in peer-reviewed journal with DOI: 10.1000/123456.
         """
         claims = ["Test claim"]
-        
+
         assessment = await quality_scorer.get_detailed_assessment(text, claims)
-        
-        assert 'sample_size' in assessment
-        assert 'methodology' in assessment
-        assert 'statistical_rigor' in assessment
-        assert 'overall_score' in assessment
-        assert 0.0 <= assessment['overall_score'] <= 1.0
+
+        assert "sample_size" in assessment
+        assert "methodology" in assessment
+        assert "statistical_rigor" in assessment
+        assert "overall_score" in assessment
+        assert 0.0 <= assessment["overall_score"] <= 1.0

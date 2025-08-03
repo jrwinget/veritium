@@ -15,7 +15,7 @@ export default function DoiInput({ onUpload, onError, isLoading, setIsLoading }:
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     if (!doi.trim()) {
       onError('Please enter a DOI')
       return
@@ -24,7 +24,7 @@ export default function DoiInput({ onUpload, onError, isLoading, setIsLoading }:
     // Basic DOI validation
     const doiPattern = /^10\..+\/.+/
     const cleanDoi = doi.replace(/^(https?:\/\/)?(dx\.)?doi\.org\//, '')
-    
+
     if (!doiPattern.test(cleanDoi)) {
       onError('Please enter a valid DOI (e.g., 10.1000/123456)')
       return
@@ -60,11 +60,11 @@ export default function DoiInput({ onUpload, onError, isLoading, setIsLoading }:
           aria-describedby="doi-help"
         />
       </div>
-      
+
       <p id="doi-help" className="text-xs text-gray-500">
         Enter a Digital Object Identifier (DOI) to fetch the paper
       </p>
-      
+
       <button
         type="submit"
         disabled={isLoading || !doi.trim()}

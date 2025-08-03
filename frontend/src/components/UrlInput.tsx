@@ -15,7 +15,7 @@ export default function UrlInput({ onUpload, onError, isLoading, setIsLoading }:
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     if (!url.trim()) {
       onError('Please enter a URL')
       return
@@ -59,11 +59,11 @@ export default function UrlInput({ onUpload, onError, isLoading, setIsLoading }:
           aria-describedby="url-help"
         />
       </div>
-      
+
       <p id="url-help" className="text-xs text-gray-500">
         Enter a direct link to a PDF or webpage containing the article
       </p>
-      
+
       <button
         type="submit"
         disabled={isLoading || !url.trim()}

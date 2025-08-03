@@ -1,8 +1,8 @@
-import { 
-  CheckCircleIcon, 
-  XCircleIcon, 
+import {
+  CheckCircleIcon,
+  XCircleIcon,
   MinusCircleIcon,
-  InformationCircleIcon 
+  InformationCircleIcon
 } from '@heroicons/react/24/outline'
 
 interface ScoreDisplayProps {
@@ -53,11 +53,10 @@ export default function ScoreDisplay({
         <span className="text-sm font-semibold text-gray-900">{formatPercentage(score)}%</span>
       </div>
       <div className="w-full bg-gray-200 rounded-full h-2">
-        <div 
-          className={`h-2 rounded-full transition-all duration-300 ${
-            score >= 0.7 ? 'bg-green-500' : 
-            score >= 0.4 ? 'bg-yellow-500' : 'bg-red-500'
-          }`}
+        <div
+          className={`h-2 rounded-full transition-all duration-300 ${score >= 0.7 ? 'bg-green-500' :
+              score >= 0.4 ? 'bg-yellow-500' : 'bg-red-500'
+            }`}
           style={{ width: `${formatPercentage(score)}%` }}
           role="progressbar"
           aria-valuenow={formatPercentage(score)}
@@ -103,13 +102,13 @@ export default function ScoreDisplay({
             <InformationCircleIcon className="h-4 w-4 mr-2" aria-hidden="true" />
             Content Analysis
           </h4>
-          
+
           <ScoreBar
             label="Similarity Score"
             score={similarity}
             description="How similar your claim is to the document's findings"
           />
-          
+
           <ScoreBar
             label="Entailment Score"
             score={entailment}
@@ -122,13 +121,13 @@ export default function ScoreDisplay({
             <InformationCircleIcon className="h-4 w-4 mr-2" aria-hidden="true" />
             Study Quality
           </h4>
-          
+
           <ScoreBar
             label="Method Quality"
             score={methodQuality}
             description="Quality of the study's research methodology"
           />
-          
+
           <ScoreBar
             label="Evidence Strength"
             score={evidenceStrength}

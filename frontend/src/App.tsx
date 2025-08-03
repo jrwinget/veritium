@@ -15,7 +15,7 @@ function App() {
           <Route path="share/:shareId" element={<SharedAssessmentPage />} />
         </Route>
       </Routes>
-      <Toaster 
+      <Toaster
         position="top-right"
         toastOptions={{
           duration: 4000,

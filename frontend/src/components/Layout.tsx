@@ -10,8 +10,8 @@ export default function Layout() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-              <Link 
-                to="/" 
+              <Link
+                to="/"
                 className="flex items-center space-x-2 text-xl font-bold text-primary-600 hover:text-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-md px-2 py-1"
                 aria-label="Veritium home"
               >
@@ -19,15 +19,14 @@ export default function Layout() {
                 <span>Veritium</span>
               </Link>
             </div>
-            
+
             <div className="flex items-center space-x-4">
               <Link
                 to="/"
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-                  location.pathname === '/'
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${location.pathname === '/'
                     ? 'bg-primary-100 text-primary-700'
                     : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
-                } focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2`}
+                  } focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2`}
                 aria-current={location.pathname === '/' ? 'page' : undefined}
               >
                 Home
@@ -48,7 +47,7 @@ export default function Layout() {
               Veritium - Scientific Article Verification System
             </p>
             <p className="mt-2">
-              <strong>Disclaimer:</strong> This tool provides automated analysis for research purposes only. 
+              <strong>Disclaimer:</strong> This tool provides automated analysis for research purposes only.
               Always consult original sources and domain experts for critical decisions.
             </p>
           </div>

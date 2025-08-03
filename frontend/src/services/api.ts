@@ -12,7 +12,7 @@ export const documentApi = {
   async uploadFile(file: File): Promise<Document> {
     const formData = new FormData()
     formData.append('file', file)
-    
+
     const response = await api.post('/documents/upload', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -24,7 +24,7 @@ export const documentApi = {
   async uploadFromUrl(url: string): Promise<Document> {
     const formData = new FormData()
     formData.append('url', url)
-    
+
     const response = await api.post('/documents/upload', formData)
     return response.data
   },
@@ -32,7 +32,7 @@ export const documentApi = {
   async uploadFromDoi(doi: string): Promise<Document> {
     const formData = new FormData()
     formData.append('doi', doi)
-    
+
     const response = await api.post('/documents/upload', formData)
     return response.data
   },
@@ -68,8 +68,8 @@ export const assessmentApi = {
   },
 
   async submitFeedback(
-    assessmentId: number, 
-    feedbackScore: number, 
+    assessmentId: number,
+    feedbackScore: number,
     comment?: string
   ): Promise<void> {
     await api.post(`/assessments/${assessmentId}/feedback`, {

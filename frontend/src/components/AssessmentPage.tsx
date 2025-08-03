@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { 
-  ShareIcon, 
-  HandThumbUpIcon, 
+import {
+  ShareIcon,
+  HandThumbUpIcon,
   HandThumbDownIcon,
   ChartBarIcon,
   DocumentTextIcon,
@@ -46,7 +46,7 @@ export default function AssessmentPage() {
     if (!assessment?.share_id) return
 
     const shareUrl = `${window.location.origin}/share/${assessment.share_id}`
-    
+
     try {
       await navigator.clipboard.writeText(shareUrl)
       toast.success('Share link copied to clipboard!')
@@ -112,7 +112,7 @@ export default function AssessmentPage() {
             Analysis of your claim against the uploaded document
           </p>
         </div>
-        
+
         <button
           onClick={handleShare}
           className="btn-secondary flex items-center"
@@ -140,8 +140,8 @@ export default function AssessmentPage() {
           <ChartBarIcon className="h-5 w-5 mr-2" aria-hidden="true" />
           Assessment Scores
         </h2>
-        
-        <ScoreDisplay 
+
+        <ScoreDisplay
           confidence={assessment.confidence_score}
           similarity={assessment.similarity_score}
           stance={assessment.stance}
@@ -186,7 +186,7 @@ export default function AssessmentPage() {
         <h2 className="text-xl font-semibold text-gray-900 mb-4">
           Was this assessment helpful?
         </h2>
-        
+
         {feedback === null ? (
           <div className="space-y-4">
             <div className="flex space-x-4">
@@ -198,7 +198,7 @@ export default function AssessmentPage() {
                 <HandThumbUpIcon className="h-5 w-5 mr-2" aria-hidden="true" />
                 Helpful
               </button>
-              
+
               <button
                 onClick={() => handleFeedback(-1)}
                 disabled={isSubmittingFeedback}
@@ -208,7 +208,7 @@ export default function AssessmentPage() {
                 Not Helpful
               </button>
             </div>
-            
+
             <div>
               <label htmlFor="feedback-comment" className="block text-sm font-medium text-gray-700 mb-2">
                 Additional comments (optional)

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { 
+import {
   ChartBarIcon,
   DocumentTextIcon,
   ExclamationTriangleIcon,
@@ -69,7 +69,7 @@ export default function SharedAssessmentPage() {
           </h1>
         </div>
         <p className="text-gray-600 max-w-2xl mx-auto">
-          This is a shared scientific article verification assessment. 
+          This is a shared scientific article verification assessment.
           You can view the analysis results but cannot modify them.
         </p>
       </div>
@@ -91,8 +91,8 @@ export default function SharedAssessmentPage() {
           <ChartBarIcon className="h-5 w-5 mr-2" aria-hidden="true" />
           Assessment Scores
         </h2>
-        
-        <ScoreDisplay 
+
+        <ScoreDisplay
           confidence={assessment.confidence_score}
           similarity={assessment.similarity_score}
           stance={assessment.stance}
@@ -149,7 +149,7 @@ export default function SharedAssessmentPage() {
       <div className="text-center text-sm text-gray-500">
         <p>Assessment created: {new Date(assessment.created_at).toLocaleDateString()}</p>
         <p className="mt-1">
-          <strong>Disclaimer:</strong> This automated analysis is for research purposes only. 
+          <strong>Disclaimer:</strong> This automated analysis is for research purposes only.
           Always consult original sources and domain experts for critical decisions.
         </p>
       </div>
