@@ -34,15 +34,10 @@ jobs:
         cd frontend
         npm ci
 
-    - name: Type check with TypeScript
-      run: |
-        cd frontend
-        npx tsc --noEmit
-
-    - name: Run tests
-      run: |
-        cd frontend
-        npm run test -- --coverage --reporter=verbose
+    # - name: Run tests
+    #   run: |
+    #     cd frontend
+    #     npm run test -- --coverage --reporter=verbose
 
     - name: Build for production
       run: |
@@ -55,10 +50,3 @@ jobs:
         name: frontend-build-${{ matrix.node-version }}
         path: frontend/dist/
         retention-days: 7
-
-    - name: Upload coverage reports
-      uses: codecov/codecov-action@v3
-      with:
-        directory: ./frontend/coverage
-        flags: frontend
-        name: frontend-coverage

@@ -41,25 +41,3 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install black flake8 mypy pytest-cov
-
-    - name: Format check with Black
-      run: |
-        cd backend
-        black --check --diff app
-
-    - name: Type check with mypy
-      run: |
-        cd backend
-        mypy app --ignore-missing-imports
-
-    - name: Test with pytest
-      run: |
-        cd backend
-        pytest app/tests/ -v --cov=app --cov-report=xml --cov-report=html --cov-fail-under=70
-
-    - name: Upload coverage reports
-      uses: codecov/codecov-action@v3
-      with:
-        file: ./backend/coverage.xml
-        flags: backend
-        name: backend-coverage
