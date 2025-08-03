@@ -61,7 +61,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Build with docker-compose
+    - name: Build with docker compose
       run: |
-        docker-compose build
+        docker compose build
         echo "Docker compose build completed successfully"
