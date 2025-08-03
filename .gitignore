@@ -1,0 +1,98 @@
+# Dependencies
+frontend/node_modules/
+backend/__pycache__/
+backend/.pytest_cache/
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.so
+
+# Build outputs
+frontend/dist/
+frontend/build/
+*.egg-info/
+build/
+dist/
+
+# Environment variables
+.env
+.env.local
+.env.staging.local
+.env.test.local
+.env.production.local
+.env.*
+
+# IDE/Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+data/veritium.db
+data/*.db
+
+# Testing
+coverage/
+.coverage
+.nyc_output
+.pytest_cache/
+frontend/coverage/
+
+# Docker
+.dockerignore
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Python virtual environments
+venv/
+env/
+ENV/
+.venv/
+.ENV/
+backend/venv/
+backend/env/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+.parcel-cache/
+
+# Node.js
+.npm
+.yarn-integrity
+yarn-error.log
