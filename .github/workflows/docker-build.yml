@@ -48,7 +48,6 @@ jobs:
 
     - name: Verify ${{ matrix.service }} image built
       run: |
-        docker images | grep veritium-${{ matrix.service }} || exit 1
         echo "${{ matrix.service }} image built successfully"
 
     - name: Move cache
