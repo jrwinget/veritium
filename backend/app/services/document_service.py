@@ -2,7 +2,7 @@ import os
 import uuid
 import fitz  # PyMuPDF
 import docx
-import requests
+import httpx
 from typing import Optional, List, Dict, Any
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
@@ -78,8 +78,9 @@ class DocumentService:
 
     async def process_url(self, url: str) -> Document:
         try:
-            response = requests.get(url, timeout=30)
-            response.raise_for_status()
+            async with httpx.AsyncClient() as client:
+                response = await client.get(url, timeout=30)
+                response.raise_for_status()
 
             # Try to extract PDF content if it's a PDF URL
             if url.lower().endswith(
@@ -133,7 +134,7 @@ class DocumentService:
 
             return document
 
-        except requests.RequestException as e:
+        except httpx.RequestError as e:
             raise HTTPException(
                 status_code=400, detail=f"Failed to fetch URL: {str(e)}"
             )
@@ -150,7 +151,8 @@ class DocumentService:
         try:
             # First try to get metadata from Crossref
             crossref_url = f"https://api.crossref.org/works/{doi}"
-            response = requests.get(crossref_url, timeout=30)
+            async with httpx.AsyncClient() as client:
+                response = await client.get(crossref_url, timeout=30)
 
             if response.status_code == 200:
                 data = response.json()
@@ -166,9 +168,10 @@ class DocumentService:
                 # Try to get full text from DOI redirect
                 full_text = ""
                 try:
-                    pdf_response = requests.get(
-                        doi_url, timeout=30, allow_redirects=True
-                    )
+                    async with httpx.AsyncClient() as client:
+                        pdf_response = await client.get(
+                            doi_url, timeout=30, follow_redirects=True
+                        )
                     if "application/pdf" in pdf_response.headers.get(
                         "content-type", ""
                     ):
@@ -225,7 +228,7 @@ class DocumentService:
 
                 return document
 
-        except requests.RequestException as e:
+        except httpx.RequestError as e:
             raise HTTPException(
                 status_code=400, detail=f"Failed to fetch DOI: {str(e)}"
             )

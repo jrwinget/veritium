@@ -37,71 +37,101 @@ async def upload_document(
 ):
     service = DocumentService(db)
 
-    if file:
-        document = await service.process_uploaded_file(file)
-    elif url:
-        document = await service.process_url(url)
-    elif doi:
-        document = await service.process_doi(doi)
-    else:
-        raise HTTPException(status_code=400, detail="Must provide file, URL, or DOI")
+    try:
+        if file:
+            document = await service.process_uploaded_file(file)
+        elif url:
+            document = await service.process_url(url)
+        elif doi:
+            document = await service.process_doi(doi)
+        else:
+            raise HTTPException(status_code=400, detail="Must provide file, URL, or DOI")
+    except HTTPException:
+        raise
+    except FileNotFoundError as e:
+        raise HTTPException(status_code=404, detail=f"File not found: {str(e)}")
+    except PermissionError as e:
+        raise HTTPException(status_code=403, detail=f"Permission denied: {str(e)}")
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=f"Invalid input: {str(e)}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
-    return DocumentResponse(
-        id=document.id,
-        title=document.title,
-        authors=document.authors or [],
-        abstract=document.abstract or "",
-        doi=document.doi,
-        url=document.url,
-        file_type=document.file_type,
-        extracted_claims=document.extracted_claims or [],
-        confidence_score=document.confidence_score,
-        method_quality_score=document.method_quality_score,
-        created_at=document.created_at.isoformat(),
-    )
+    try:
+        return DocumentResponse(
+            id=document.id,
+            title=document.title,
+            authors=document.authors or [],
+            abstract=document.abstract or "",
+            doi=document.doi,
+            url=document.url,
+            file_type=document.file_type,
+            extracted_claims=document.extracted_claims or [],
+            confidence_score=document.confidence_score,
+            method_quality_score=document.method_quality_score,
+            created_at=document.created_at.isoformat(),
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to format document response: {str(e)}")
 
 
 @router.get("/{document_id}", response_model=DocumentResponse)
 async def get_document(document_id: int, db: AsyncSession = Depends(get_db)):
-    service = DocumentService(db)
-    document = await service.get_document(document_id)
+    try:
+        service = DocumentService(db)
+        document = await service.get_document(document_id)
 
-    if not document:
-        raise HTTPException(status_code=404, detail="Document not found")
+        if not document:
+            raise HTTPException(status_code=404, detail="Document not found")
+    except HTTPException:
+        raise
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=f"Invalid document ID: {str(e)}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
-    return DocumentResponse(
-        id=document.id,
-        title=document.title,
-        authors=document.authors or [],
-        abstract=document.abstract or "",
-        doi=document.doi,
-        url=document.url,
-        file_type=document.file_type,
-        extracted_claims=document.extracted_claims or [],
-        confidence_score=document.confidence_score,
-        method_quality_score=document.method_quality_score,
-        created_at=document.created_at.isoformat(),
-    )
+    try:
+        return DocumentResponse(
+            id=document.id,
+            title=document.title,
+            authors=document.authors or [],
+            abstract=document.abstract or "",
+            doi=document.doi,
+            url=document.url,
+            file_type=document.file_type,
+            extracted_claims=document.extracted_claims or [],
+            confidence_score=document.confidence_score,
+            method_quality_score=document.method_quality_score,
+            created_at=document.created_at.isoformat(),
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to format document response: {str(e)}")
 
 
 @router.get("/", response_model=List[DocumentResponse])
 async def list_documents(db: AsyncSession = Depends(get_db)):
-    service = DocumentService(db)
-    documents = await service.list_documents()
+    try:
+        service = DocumentService(db)
+        documents = await service.list_documents()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to retrieve documents: {str(e)}")
 
-    return [
-        DocumentResponse(
-            id=doc.id,
-            title=doc.title,
-            authors=doc.authors or [],
-            abstract=doc.abstract or "",
-            doi=doc.doi,
-            url=doc.url,
-            file_type=doc.file_type,
-            extracted_claims=doc.extracted_claims or [],
-            confidence_score=doc.confidence_score,
-            method_quality_score=doc.method_quality_score,
-            created_at=doc.created_at.isoformat(),
-        )
-        for doc in documents
-    ]
+    try:
+        return [
+            DocumentResponse(
+                id=doc.id,
+                title=doc.title,
+                authors=doc.authors or [],
+                abstract=doc.abstract or "",
+                doi=doc.doi,
+                url=doc.url,
+                file_type=doc.file_type,
+                extracted_claims=doc.extracted_claims or [],
+                confidence_score=doc.confidence_score,
+                method_quality_score=doc.method_quality_score,
+                created_at=doc.created_at.isoformat(),
+            )
+            for doc in documents
+        ]
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to format document response: {str(e)}")
