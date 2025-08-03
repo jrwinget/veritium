@@ -14,72 +14,44 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 18.x
-        cache: 'npm'
-        cache-dependency-path: frontend/package-lock.json
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
 
-    - name: Install dependencies
-      run: |
-        cd frontend
-        npm ci
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm ci
 
-    - name: Build for production
-      run: |
-        cd frontend
-        # Build with GitHub Pages base path
-        VITE_API_URL=https://api.your-domain.com npm run build
-      env:
-        NODE_ENV: production
+      - name: Build for GitHub Pages
+        run: |
+          cd frontend
+          npm run build
+        env:
+          NODE_ENV: production
 
-    - name: Setup Pages
-      uses: actions/configure-pages@v4
+      - name: Configure Pages
+        uses: actions/configure-pages@v4
 
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: ./frontend/dist
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend/dist
 
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    
-    steps:
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
-
-  # Optional: Deploy a demo backend to a cloud service
-  deploy-demo-backend:
-    runs-on: ubuntu-latest
-    needs: build
-    if: github.ref == 'refs/heads/main'
-    
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - name: Deploy to Railway/Render/Fly.io
-      run: |
-        echo "Backend deployment would go here"
-        echo "Examples:"
-        echo "- Railway: railway up"
-        echo "- Render: render deploy"
-        echo "- Fly.io: flyctl deploy"
-        echo "Configure your preferred service and uncomment deployment commands"
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

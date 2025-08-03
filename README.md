@@ -270,7 +270,7 @@ npm test --prefix frontend/
 
 ## License
 
-Open source under MIT License. See LICENSE file for details.
+Open source under AGPL-3.0 License. See LICENSE file for details.
 
 ## Roadmap
 
